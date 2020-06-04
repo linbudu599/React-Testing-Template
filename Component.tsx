@@ -7,7 +7,7 @@ interface IDataItem {
   work: string;
 }
 
-const data: IDataItem[] = [
+export const data: IDataItem[] = [
   {
     name: "穹心",
     BU: "淘系技术部",
@@ -25,11 +25,11 @@ const data: IDataItem[] = [
   },
 ];
 
-const commonFunc = (arg: string): boolean => {
+export const commonFunc = (arg: string): boolean => {
   return arg.length === 5;
 };
 
-const asyncFunc = (arg: string): Promise<number> => {
+export const asyncFunc = (arg: string): Promise<number> => {
   return new Promise<number>((resolve, reject) => {
     setTimeout(() => {
       resolve(arg.length);
@@ -37,19 +37,21 @@ const asyncFunc = (arg: string): Promise<number> => {
   });
 };
 
-interface IFull {
+interface IProps {
   commonProp: number;
   commonFunc: (arg: string) => boolean;
   asyncFunc: (arg: string) => Promise<number>;
 }
 
-const Page: React.FC<IFull> = ({
+const Page: React.FC<IProps> = ({
   commonProp,
   commonFunc,
   asyncFunc,
   children,
 }) => {
   const [info, setInfo] = useState<IDataItem[]>(data);
+
+  const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
     (async () => {
@@ -61,12 +63,15 @@ const Page: React.FC<IFull> = ({
     asyncFunc("budu");
   });
 
-  const insideFunc = (arg: string): string => arg;
+  const insideFunc = (): void => {
+    setCount((count) => count + 1);
+  };
 
   return (
     <>
       <p>Jest & Enzyme</p>
-      <p className="common-prop"></p>
+      <p className="count">{count}</p>
+      <p className="common-prop">{commonProp}</p>
       <button
         className="common-func"
         onClick={() => {
@@ -83,10 +88,18 @@ const Page: React.FC<IFull> = ({
       >
         Invoke Async Function
       </button>
+      <button
+        className="inside-func"
+        onClick={() => {
+          insideFunc();
+        }}
+      >
+        Invoke Inside Function
+      </button>
       {children}
       {info.map(({ name, BU, work }, index) => {
         return (
-          <p key={index}>
+          <p key={index} className="info">
             {name},{BU},{work}
           </p>
         );

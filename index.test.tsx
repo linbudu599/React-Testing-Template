@@ -6,7 +6,7 @@ import Comp from "./comp";
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe("Name of the group", () => {
+describe.skip("Name of the group", () => {
   it("should xxx", () => {
     expect(1 + 1).toBe(2);
   });
