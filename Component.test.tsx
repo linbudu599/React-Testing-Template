@@ -8,6 +8,9 @@ Enzyme.configure({ adapter: new Adapter() });
 describe("Common Component Test", () => {
   const commonFuncMock = jest.fn(commonFunc);
   const asyncFuncMock = jest.fn(asyncFunc);
+  const conditionalFuncMock = jest.fn();
+
+  conditionalFuncMock.mockReturnValueOnce(true).mockReturnValueOnce(false);
 
   asyncFuncMock.mockResolvedValue(7);
 
@@ -15,23 +18,24 @@ describe("Common Component Test", () => {
     commonProp: 599,
     commonFunc: commonFuncMock,
     asyncFunc: asyncFuncMock,
+    conditionalFunc: conditionalFuncMock,
   };
 
-  it.skip("should invoke function from props when rendering", () => {
-    const wrapper = shallow(<MyComponent {...injectProps} />);
+  it("should invoke function from props when rendering", () => {
+    const wrapper = mount(<MyComponent {...injectProps} />);
     expect(commonFuncMock).toBeCalledWith("budu");
     expect(asyncFuncMock).toBeCalledWith("budu");
   });
 
-  it.skip("should use property from props", () => {
+  it("should use property from props", () => {
     const wrapper = shallow(<MyComponent {...injectProps} />);
 
     expect(wrapper.find("p.common-prop").text()).toBe(
-      Number(injectProps.commonProp)
+      String(injectProps.commonProp)
     );
   });
 
-  it.skip("should render common-func button and be able to invoke commonFunc ", () => {
+  it("should render common-func button and be able to invoke commonFunc ", () => {
     const wrapper = shallow(<MyComponent {...injectProps} />);
     const commonFuncBtn = wrapper.find("button.common-func");
     expect(commonFuncBtn.text()).toBe("Invoke Common Function");
@@ -40,8 +44,8 @@ describe("Common Component Test", () => {
     expect(commonFuncMock.mock.results[0].value).toBe(false);
   });
 
-  it.skip("should render async-func button and be able to invoke asyncFunc ", async () => {
-    expect.assertions(3);
+  it("should render async-func button and be able to invoke asyncFunc ", async () => {
+    expect.assertions(2);
     const wrapper = shallow(<MyComponent {...injectProps} />);
     const asyncFuncBtn = wrapper.find("button.async-func");
     expect(asyncFuncBtn.text()).toBe("Invoke Async Function");
@@ -51,7 +55,7 @@ describe("Common Component Test", () => {
     // expect(asyncFuncMock.mock.results[0].value).toBe(7);
   });
 
-  it.skip("should render inside-func button and be able to invoke insideFunc ", async () => {
+  it("should render inside-func button and be able to invoke insideFunc ", async () => {
     const wrapper = mount(<MyComponent {...injectProps} />);
     const insideFuncBtn = wrapper.find("button.inside-func");
     const count = wrapper.find("p.count");
@@ -61,7 +65,7 @@ describe("Common Component Test", () => {
     expect(count.text()).toBe("1");
   });
 
-  it.skip("should render items correctly", () => {
+  it("should render items correctly", () => {
     const wrapper = mount(<MyComponent {...injectProps} />);
     const infoElements = wrapper.find("p.info");
     expect(infoElements.length).toBe(3);
@@ -69,5 +73,24 @@ describe("Common Component Test", () => {
       const infoItem = Object.values(data[i]);
       expect(infoElements.at(i).text()).toBe(infoItem.join(","));
     }
+  });
+
+  it.only("should render conditional DOM only when conditionalFunc return true", () => {
+    const wrapper = mount(<MyComponent {...injectProps} />);
+    expect(typeof wrapper.prop("conditionalFunc")).toBe("function");
+    const conditionalEle = wrapper.find("p.conditional");
+    expect(conditionalEle.exists()).toBeTruthy();
+    expect(conditionalEle.text()).toBe("Conditional Function");
+    wrapper.unmount();
+    const wrapperFalse = mount(<MyComponent {...injectProps} />);
+    expect(wrapperFalse.exists("p.conditional")).toBeFalsy();
+  });
+
+  it("should fetch remote data and render to DOM", () => {
+    const wrapper = mount(<MyComponent {...injectProps} />);
+    // TODO: remoteData test details?
+    const dataElement = wrapper.find("p.remote-data");
+    // expect(dataElement.length).toBe(15);
+    // expect()
   });
 });

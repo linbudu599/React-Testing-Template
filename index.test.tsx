@@ -6,11 +6,7 @@ import Comp from "./comp";
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe.skip("Name of the group", () => {
-  it("should xxx", () => {
-    expect(1 + 1).toBe(2);
-  });
-
+describe("Name of the group", () => {
   it("should ", () => {
     const wrapper = shallow(<Comp />);
     expect(wrapper.find("p").exists()).toEqual(true);
