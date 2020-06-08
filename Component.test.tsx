@@ -95,4 +95,28 @@ describe('Common Component Test', () => {
     // expect(dataElement.length).toBe(15);
     // expect()
   });
+
+  it('should set props correctly', () => {
+    const wrapper = mount(
+      <MyComponent {...injectProps} propsToBeSet={'INIT'} />
+    );
+
+    const setPropsEle = wrapper.find('p.set-prop');
+    expect(setPropsEle.text()).toBe('INIT');
+
+    wrapper.setProps({ ...injectProps, propsToBeSet: 'MODIFIED' });
+    expect(setPropsEle.text()).toBe('MODIFIED');
+  });
+
+  it('should set method correctly', () => {
+    const wrapper = mount(
+      <MyComponent {...injectProps} methodTobeSet={() => true} />
+    );
+
+    const setMethodEle = wrapper.find('p.set-method');
+    expect(setMethodEle.text()).toBe('INIT');
+
+    wrapper.setProps({ methodTobeSet: () => false });
+    expect(setMethodEle.text()).toBe('MODIFIED');
+  });
 });
