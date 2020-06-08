@@ -1,15 +1,15 @@
-import React from "react";
-import Enzyme, { render, shallow, mount } from "enzyme";
-import App from "./App";
-import Adapter from "enzyme-adapter-react-16";
+import React from 'react';
+import Enzyme, { render, shallow, mount } from 'enzyme';
+import App from './App';
+import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe.skip("App Test Suites", () => {
-  it("should render error handler UI", () => {
+describe('App Test Suites', () => {
+  it('should render error handler UI', () => {
     const wrapper = mount(<App />);
     expect(wrapper).toThrowError();
-    expect(wrapper.find("p.error").exists()).toBeTruthy();
-    expect(wrapper.text()).toBe("Error");
+    expect(wrapper.find('p.error').exists()).toBeTruthy();
+    expect(wrapper.text()).toBe('Error');
   });
 });
