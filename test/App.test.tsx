@@ -1,6 +1,6 @@
 import React from 'react';
 import Enzyme, { render, shallow, mount } from 'enzyme';
-import App from '../components/App';
+import App from '../src/components/App';
 import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
