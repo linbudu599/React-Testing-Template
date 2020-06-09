@@ -1,7 +1,7 @@
 import React from 'react';
 import Enzyme, { render, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import MyComponent, { commonFunc, asyncFunc, data } from './Component';
+import MyComponent, { commonFunc, asyncFunc, data } from '../components/Component';
 
 Enzyme.configure({ adapter: new Adapter() });
 
