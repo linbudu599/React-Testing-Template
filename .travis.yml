@@ -1,0 +1,19 @@
+language: node_js
+
+node_js:
+  - "12"
+
+branches:
+  only:
+    - master
+
+before_install:
+  - npm install -g cnpm --registry=https://registry.npm.taobao.org
+install:
+  - cnpm i
+script:
+  - npm run test
+  - npm run cov
+
+after_success:
+  - ./bin/codecov -e TRAVIS_NODE_VERSION -f coverage/*.json
