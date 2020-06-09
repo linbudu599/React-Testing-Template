@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 interface IDataItem {
   name: string;
@@ -9,19 +9,19 @@ interface IDataItem {
 
 export const data: IDataItem[] = [
   {
-    name: '穹心',
-    BU: '淘系技术部',
-    work: 'FE',
+    name: "穹心",
+    BU: "芜湖,起飞!",
+    work: "FE Engineer",
   },
   {
-    name: '穹心',
-    BU: '淘系技术部',
-    work: 'FE',
+    name: "穹心",
+    BU: "芜湖,起飞!",
+    work: "FE Engineer",
   },
   {
-    name: '穹心',
-    BU: '淘系技术部',
-    work: 'FE',
+    name: "穹心",
+    BU: "芜湖,起飞!",
+    work: "FE Engineer",
   },
 ];
 
@@ -61,14 +61,19 @@ const Page: React.FC<IProps> = ({
 
   const [count, setCount] = useState<number>(0);
 
+  (async () => {
+    await asyncFunc("budu");
+  })();
+
   useEffect(() => {
     (async () => {
-      const res = await axios.get('http://api.linbudu.top/data');
-      setRemoteData(res.data['data']);
+      const res = await axios.get(
+        "https://hacker-news.firebaseio.com/v0/8863.json?print=pretty"
+      );
+      setRemoteData(res.data.title);
     })();
 
-    commonFunc('budu');
-    asyncFunc('budu');
+    commonFunc("budu");
   });
 
   const insideFunc = (): void => {
@@ -78,26 +83,26 @@ const Page: React.FC<IProps> = ({
   return (
     <>
       <p>Jest & Enzyme</p>
-      <p className='count'>{count}</p>
-      <p className='common-prop'>{commonProp}</p>
+      <p className="count">{count}</p>
+      <p className="common-prop">{commonProp}</p>
       <button
-        className='common-func'
+        className="common-func"
         onClick={() => {
-          commonFunc('linbudu');
+          commonFunc("linbudu");
         }}
       >
         Invoke Common Function
       </button>
       <button
-        className='async-func'
+        className="async-func"
         onClick={() => {
-          asyncFunc('linbudu');
+          asyncFunc("linbudu");
         }}
       >
         Invoke Async Function
       </button>
       <button
-        className='inside-func'
+        className="inside-func"
         onClick={() => {
           insideFunc();
         }}
@@ -105,27 +110,20 @@ const Page: React.FC<IProps> = ({
         Invoke Inside Function
       </button>
       {conditionalFunc && conditionalFunc() ? (
-        <p className='conditional'>Conditional Function</p>
+        <p className="conditional">Conditional Function</p>
       ) : null}
       {children}
       {info.map(({ name, BU, work }, index) => {
         return (
-          <p key={index} className='info'>
+          <p key={index} className="info">
             {name},{BU},{work}
           </p>
         );
       })}
-      {remoteData &&
-        remoteData.map((item: any) => {
-          return (
-            <p key={item.uid} className='remote-data'>
-              {item.favorTech}
-            </p>
-          );
-        })}
-      <p className='set-prop'>{propsToBeSet}</p>
-      <p className='set-method'>
-        {methodTobeSet && methodTobeSet() ? 'INIT' : 'MODIFIED'}
+      <p className="remote">{remoteData ? remoteData : "Loading"}</p>
+      <p className="set-prop">{propsToBeSet}</p>
+      <p className="set-method">
+        {methodTobeSet && methodTobeSet() ? "INIT" : "MODIFIED"}
       </p>
     </>
   );
