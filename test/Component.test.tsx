@@ -126,7 +126,7 @@ describe("Common Component Test", () => {
     expect(setMethodEle.text()).toBe("MODIFIED");
   });
 
-  it("should run asyncFunc correctly", async () => {
-    expect(await asyncFunc("linbudu")).toBe(7);
-  });
+  // it("should run asyncFunc correctly", async () => {
+  //   expect(await asyncFunc("linbudu")).toBe(7);
+  // });z
 });
