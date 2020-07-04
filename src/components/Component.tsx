@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import useCounter from "../hooks/useCounter";
 import axios from "axios";
 
 interface IDataItem {
@@ -80,6 +81,8 @@ const Page: React.FC<IProps> = ({
     setCount((count) => count + 1);
   };
 
+  const { count: hookCount, increment } = useCounter<number>(1);
+
   return (
     <>
       <p>Jest & Enzyme</p>
@@ -125,6 +128,16 @@ const Page: React.FC<IProps> = ({
       <p className="set-method">
         {methodTobeSet && methodTobeSet() ? "INIT" : "MODIFIED"}
       </p>
+
+      <p>useCounter</p>
+      <p>{hookCount}</p>
+      <button
+        onClick={() => {
+          increment(5);
+        }}
+      >
+        +5!
+      </button>
     </>
   );
 };
