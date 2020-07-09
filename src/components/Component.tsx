@@ -2,50 +2,7 @@ import React, { useState, useEffect } from "react";
 import useCounter from "../hooks/useCounter";
 import axios from "axios";
 
-interface IDataItem {
-  name: string;
-  BU: string;
-  work: string;
-}
-
-export const data: IDataItem[] = [
-  {
-    name: "穹心",
-    BU: "芜湖,起飞!",
-    work: "FE Engineer",
-  },
-  {
-    name: "穹心",
-    BU: "芜湖,起飞!",
-    work: "FE Engineer",
-  },
-  {
-    name: "穹心",
-    BU: "芜湖,起飞!",
-    work: "FE Engineer",
-  },
-];
-
-export const commonFunc = (arg: string): boolean => {
-  return arg.length === 5;
-};
-
-export const asyncFunc = (arg: string): Promise<number> => {
-  return new Promise<number>((resolve, reject) => {
-    setTimeout(() => {
-      resolve(arg.length);
-    }, 2000);
-  });
-};
-
-interface IProps {
-  commonProp: number;
-  commonFunc: (arg: string) => boolean;
-  asyncFunc: (arg: string) => Promise<number>;
-  conditionalFunc?: () => boolean;
-  propsToBeSet?: any;
-  methodTobeSet?: any;
-}
+import { data, commonFunc, asyncFunc } from "../util";
 
 const Page: React.FC<IProps> = ({
   commonProp,
@@ -57,9 +14,7 @@ const Page: React.FC<IProps> = ({
   children,
 }) => {
   const [info, setInfo] = useState<IDataItem[]>(data);
-
   const [remoteData, setRemoteData] = useState<any>();
-
   const [count, setCount] = useState<number>(0);
 
   (async () => {
@@ -116,10 +71,10 @@ const Page: React.FC<IProps> = ({
         <p className="conditional">Conditional Function</p>
       ) : null}
       {children}
-      {info.map(({ name, BU, work }, index) => {
+      {info.map(({ name, desc, work }, index) => {
         return (
           <p key={index} className="info">
-            {name},{BU},{work}
+            {name},{desc},{work}
           </p>
         );
       })}

@@ -1,11 +1,8 @@
 import React from "react";
 import Enzyme, { render, shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import MyComponent, {
-  commonFunc,
-  asyncFunc,
-  data,
-} from "../src/components/Component";
+import MyComponent from "../src/components/Component";
+import { commonFunc, asyncFunc, data } from "../src/util";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -128,5 +125,5 @@ describe("Common Component Test", () => {
 
   // it("should run asyncFunc correctly", async () => {
   //   expect(await asyncFunc("linbudu")).toBe(7);
-  // });z
+  // });
 });
