@@ -27,8 +27,8 @@
     "cov": "codecov -t a2187303-880d-4fbf-ad80-6358b6e1b726"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.2",
-    "@babel/preset-env": "^7.10.2",
+    "@babel/core": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.1",
     "@babel/preset-typescript": "^7.10.1",
     "@types/enzyme": "^3.10.5",
